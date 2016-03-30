@@ -10,14 +10,14 @@ function smtp(router,connection,md5){
 
 smtp.prototype.handleRoutes = function(router,connection,md5) {
     var self = this;
-    
+
     router.post("/web-reg-email",function(req,res){
         var mailto = req.body.mailto;
         var pass = req.body.pass;
         mail('info@node8.net',mailto,messageP(mailto,pass));
-        res.json({"message":"yess"});                 
-    });   
-   
+        res.json({"message":"yess"});
+    });
+
     router.post("/smtp",function(req,res){
         var username = req.body.username;
         var password = randomString();
@@ -28,7 +28,7 @@ smtp.prototype.handleRoutes = function(router,connection,md5) {
                 if(rows.length<1){
                     res.json({"message":"wrong email address"});
                 }else{
-                    mail('info@node8.net',username,message(username,password)); 
+                    mail('info@node8.net',username,message(username,password));
                     var query = "UPDATE user SET password= '"+md5(password)+"' WHERE username= '"+username+"'";
                     connection.query(query,function(err,rows){
                         if(err){
@@ -37,12 +37,12 @@ smtp.prototype.handleRoutes = function(router,connection,md5) {
                             res.json({"message":"successfully sent email "});
                         }
                     });
-                    
+
                 }
             }
         });
-    });   
-    
+    });
+
      router.post("/smtpBill",function(req,res){
         var username = req.body.username;
         var password = randomString();
@@ -53,7 +53,7 @@ smtp.prototype.handleRoutes = function(router,connection,md5) {
                 if(rows.length<1){
                     res.json({"message":"wrong email address"});
                 }else{
-                    mail('info@node8.net',username,sendBill(username)); 
+                    mail('info@node8.net',username,sendBill(username));
                     var query = "UPDATE user SET password= '"+md5(password)+"' WHERE username= '"+username+"'";
                     connection.query(query,function(err,rows){
                         if(err){
@@ -62,12 +62,12 @@ smtp.prototype.handleRoutes = function(router,connection,md5) {
                             res.json({"message":"successfully sent email "});
                         }
                     });
-                    
+
                 }
             }
         });
-    });   
-    
+    });
+
 }
 
 function message(username,randomString) {
@@ -96,7 +96,7 @@ function randomString() {
 }
 
 function mail(from, to, message) {
-    
+
     var client = simplesmtp.connect(587, 'smtp.gmail.com', {
         secureConnection: false,
         auth: {
@@ -121,7 +121,7 @@ function mail(from, to, message) {
     client.on('ready', function(success) {
         client.quit();
     });
-    
+
     client.on('error', function(err) {
         console.log('ERROR');
         console.log(err);

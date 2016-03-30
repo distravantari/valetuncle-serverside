@@ -34,7 +34,6 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
         });
     });
 
-    //GET all data from transaction with cur transId
     router.post("/transaction",function(req,res){
         var username = req.body.username;
         var query = "SELECT * FROM transaction WHERE username='"+username+"' AND status = 'active'";
@@ -51,24 +50,6 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
         //punya distra
         // var driverId = req.body.driverId;
         // var query = "SELECT objectId,pickUpAddress,username,remark FROM transaction WHERE (driverTemp="+driverId+" OR driverId="+driverId+") AND status = 'active' LIMIT 1";
-        // connection.query(query,function(err,rows){
-        //     if(err) {
-        //         res.json({"message" : query});
-        //     } else {
-        //         if(rows.length==1){
-        //             res.json({"message" : "Success;"+rows[0].pickUpAddress+";"+rows[0].remark+";"+rows[0].objectId+";"+rows[0].username});
-        //         }else{
-        //             res.json({"message" : "error;"});
-        //         }
-        //     }
-        // });
-
-
-        // //punya mei
-        // var driverId = req.body.driverId;
-        // //cuma drivertemp soalnya kalo or driverid, bakal terus2an success jadi bakal looping terus d si driver
-        // //jadi hrs ad 1 query tambahan yg d bedain untuk pindah activity
-        // var query = "SELECT objectId,pickUpAddress,username,remark FROM transaction WHERE ((driverTemp="+driverId+") AND (status = 'active')) LIMIT 1";
         // connection.query(query,function(err,rows){
         //     if(err) {
         //         res.json({"message" : query});
@@ -114,37 +95,17 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                 }
                 else{
                     var query = "SELECT objectId,pickUpAddress,username,remark,fee FROM transaction WHERE ((driverTemp="+driverId+") AND (status = 'active')) LIMIT 1";
-                        connection.query(query,function(err,rows){
-                            if(err) {
-                                res.json({"message" : query});
-                            } else {
-                                if(rows.length==1){
-                                    res.json({"message" : "Success;"+rows[0].pickUpAddress+";"+rows[0].remark+";"+rows[0].objectId+";"+rows[0].username+";"+rows[0].fee});
-                                }else{
-                                    res.json({"message" : "error;"});
-                                }
+                    connection.query(query,function(err,rows){
+                        if(err) {
+                            res.json({"message" : query});
+                        } else {
+                            if(rows.length==1){
+                                res.json({"message" : "Success;"+rows[0].pickUpAddress+";"+rows[0].remark+";"+rows[0].objectId+";"+rows[0].username+";"+rows[0].fee});
+                            }else{
+                                res.json({"message" : "error;"});
                             }
-                        });
-                }
-            }
-        });
-    });
-
-    //fungsi buat pindah activity, dipanggil barengan sama gettransaction biasa
-    router.post("/getTransaction_pindahactivity",function(req,res){
-        var driverId = req.body.driverId;
-        //var query = "SELECT MAX(notif) FROM transaction WHERE (driverId="+driverId+" AND status = 'active') LIMIT 1";
-        connection.query("SELECT notif FROM transaction WHERE (driverId="+driverId+" AND status = 'active') ;",function(err,rows){
-            if(err){
-                res.json({"message":"err.."});
-            }else {
-                if(rows[0].notif == "1")
-                {
-                    res.json({"message":"success"});
-                }
-                else
-                {
-                    res.json({"message":"err.."});
+                        }
+                    });
                 }
             }
         });

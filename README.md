@@ -348,3 +348,51 @@ params : x-www-form-urlencoded
     - transId: you know this shit(2)
 response : {"message":"__"}
 ```
+
+## MULTIDRIVER
+#### POST: /transaction_multipledriver
+push notif android
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### DELETE: /transaction_multipledriver
+push notif android
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /cancelTransMulti
+push notif android
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+    - username: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /transactionInsert_multipledriver
+push notif android
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - username:
+    - actualLocation: geolocation
+    - promocode: you know this shit(2)
+response : {"message":"__"}
+```
+#### POST: /checkUsername_multipledriver
+push notif android
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+response : {"message":"__"}
+```

@@ -76,13 +76,8 @@ promo.prototype.handleRoutes = function(router,connection){
                         val = "true";
                       }else{
                         //  prows[0].limit >= rows.length ?
-                        if (Number(prows[0].limit) >= rows.length) {
-                          val = "true";
-                        }else{
-                          val = "false";
-                        }
+                        val = "false";
                       }
-
                      }
                    }
                    res.json({"message":val});

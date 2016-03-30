@@ -14,6 +14,7 @@ var smtpModel = require("./model/smtp.js");
 var transactionModel = require("./model/transaction.js");
 var historyModel = require("./model/history.js");
 var promoModel = require("./model/promo.js");
+var multidriverModel = require("./model/multidriver.js");
 // end of require model
 
 var app = express();

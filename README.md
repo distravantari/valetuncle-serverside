@@ -61,6 +61,25 @@ response : {"message":"__"}
 ```
 
 ## TRANSACTION
+#### POST: /transactionInsert
+inserting a transaction
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - username
+    - actualLocation
+    - promoCode
+    - fee
+    - notif
+    - pickUp
+    - remark
+    - destinationAddress
+    - pickUpAddress
+response : {"message":"__"}
+    - error
+    - success
+```
+
 #### POST: /updateTransaction
 ```sh
 params : x-www-form-urlencoded
@@ -98,3 +117,65 @@ response : {"message":"__"}
     - Success :
         you will got the information on field "Trans"
 ```
+
+#### POST: /getTransaction
+check is there any transaction for the driver with the specify ID
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - driverId: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /getDistance
+check is there any transaction for the driver with the specify ID
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+    - driverLoc: driver geolocation
+response : {"message":"__"}
+    - err..:
+    - distance
+```
+
+#### DELETE: /transaction
+check is there any transaction for the driver with the specify ID
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - username: you know this shit(2)
+response : {"message":"__"}
+```
+#### POST: /cancelTrans
+canceling the transaction, set the transaction status to cancel (not literally delete the transaction) based on username
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - username: you know this shit(2)
+response : {"message":"__"}
+    - err:
+    - successfully delete transaction
+```
+
+#### POST: /cancelTransaction
+canceling the transaction, set the transaction status to cancel (not literally delete the transaction) based on ID
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - username: you know this shit(2)
+response : {"message":"__"}
+    - err:
+    - successfully delete transaction
+```
+
+#### POST: /cancelDriver
+canceling he transaction, set the transaction status to cancel (not literally delete the transaction) based on ID
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+    - reason: you know this shit(3)
+response : {"message":"__"}
+    - Error executing MySQL query:
+    - Cancel Added !

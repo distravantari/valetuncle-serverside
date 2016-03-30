@@ -176,6 +176,7 @@ connect.prototype.configureExpress = function(connection) {
         var transaction = new transactionModel(router,connection,md5);
 				var history = new historyModel(router,connection,md5);
 				var promo = new promoModel(router,connection,md5);
+				var multidriver = new multidriverModel(router,connection);
 				// end of calling model
 
         self.startServer();

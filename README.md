@@ -178,4 +178,173 @@ params : x-www-form-urlencoded
     - reason: you know this shit(3)
 response : {"message":"__"}
     - Error executing MySQL query:
-    - Cancel Added !
+    - successfully delete transaction
+```
+
+## DRIVER
+#### POST: /driverNotif
+push notif android
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - driverId: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /testNotif
+push notif android
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - driverId: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /driver
+get all data from driver from specify ID
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - objectId: you know this shit(2)
+response : {"message":"__"}
+```
+#### POST: /driverNumber
+get all data from driver from specify ID
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - objectId: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /checkStartJob
+check startJob status on transaction form specify ID
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /checkUsername
+check is the usr is already been deleted
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - username: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /updateRating
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - driverId: you know this shit(2)
+    - review:
+    - newRating:
+response : {"message":"__"}
+```
+#### POST: /review
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+    - review:
+response : {"message":"__"}
+```
+
+#### POST: /setFlag
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - driverId: you know this shit(2)
+response : {"message":"__"}
+```
+#### POST: /updateDriver
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - objectId: you know this shit(2)
+    - input: query form client to transaction table
+response : {"message":"__"}
+```
+
+#### POST: /imei
+check if statusLogin from specify IMEI
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - imei: you know this shit(2)
+response : {"message":"__"}
+```
+
+#### POST: /loginDriver
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - imei: you know this shit(2)
+    - idNumber:
+response : {"message":"__"}
+```
+
+#### POST: /getDriverAnswer
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+    - driverId: you know this shit(3)
+    - answer:
+response : {"message":"__"}
+```
+
+#### POST: /getDriverAnswer_edit
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+    - driverId: you know this shit(3)
+    - answer:
+response : {"message":"__"}
+```
+
+#### POST: /transactionDecline
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+    - driverId: you know this shit(3)
+response : {"message":"__"}
+```
+
+#### POST: /balance
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - driverId: you know this shit(3)
+response : {"message":"__"}
+```
+
+#### POST: /cekDriver
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - driverId: you know this shit(2)
+    - transId: you know this shit(3)
+response : {"message":"__"}
+```
+
+#### POST: /checkHere
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(3)
+response : {"message":"__"}
+```
+
+#### POST: /setDriverId
+```sh
+params : x-www-form-urlencoded
+    - token: you know this shit
+    - transId: you know this shit(2)
+response : {"message":"__"}
+```

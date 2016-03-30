@@ -818,29 +818,5 @@ driver.prototype.handleRoutes = function(router,connection,md5) {
             }
         });
     });
-
-    //MULTIPLE DRIVER STARTS FROM HERE
-
-    // check is the usr is already been deleted
-    router.post("/checkUsername_multipledriver",function(req,res){
-        var transId = req.body.transId;
-        var query = "SELECT username FROM transaction WHERE objectId='"+transId+"' and status = 'active'";
-        connection.query(query,function(err,rows){
-            if(err) {
-                res.json({"error" : true, "message" : "Error executing MySQL query"});
-            } else {
-                if(rows.length>0)
-                {
-                    res.json({"message":"error"}); //is not been deleted
-                }
-                else
-                {
-                    res.json({"message":"success"}); //is been deleted
-                }
-            }
-        });
-    });
-
-
 }
 module.exports = driver;

@@ -7,6 +7,13 @@ var express = require("express"),
 	Waterline = require('waterline'),
 	mysqlAdapter = require('sails-mysql');
 
+	// include and initialize the rollbar library with your access token
+	var rollbar = require("rollbar");
+	rollbar.init("1ae39e54dddd453594a7c3b0b2095ce4");
+
+	// record a generic message and send to rollbar
+	rollbar.reportMessage("server started");
+
 // require model
 var userModel = require("./model/users.js");
 var driverModel = require("./model/driver.js");

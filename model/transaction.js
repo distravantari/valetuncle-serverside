@@ -75,13 +75,13 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                     if(rows[0].notif == "1")
                     {
                         // res.json({"message":"changeactivity"});
-                        var query = "SELECT objectId,pickUpAddress,username,remark,fee FROM transaction WHERE ((driverId="+driverId+") AND (status = 'active')) LIMIT 1";
+                        var query = "SELECT objectId,pickUpAddress,username,remark,fee,promocode FROM transaction WHERE ((driverId="+driverId+") AND (status = 'active')) LIMIT 1";
                         connection.query(query,function(err,rows){
                             if(err) {
                                 res.json({"message" : query});
                             } else {
                                 if(rows.length==1){
-                                    res.json({"message" : "changeactivity;"+rows[0].pickUpAddress+";"+rows[0].remark+";"+rows[0].objectId+";"+rows[0].username+";"+rows[0].fee});
+                                    res.json({"message" : "changeactivity;"+rows[0].pickUpAddress+";"+rows[0].remark+";"+rows[0].objectId+";"+rows[0].username+";"+rows[0].fee+";"+rows[0].promocode});
                                 }else{
                                     res.json({"message" : "errorCA;"});
                                 }
@@ -94,13 +94,13 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                     }
                 }
                 else{
-                    var query = "SELECT objectId,pickUpAddress,username,remark,fee FROM transaction WHERE ((driverTemp="+driverId+") AND (status = 'active')) LIMIT 1";
+                    var query = "SELECT objectId,pickUpAddress,username,remark,fee,promocode FROM transaction WHERE ((driverTemp="+driverId+") AND (status = 'active')) LIMIT 1";
                     connection.query(query,function(err,rows){
                         if(err) {
                             res.json({"message" : query});
                         } else {
                             if(rows.length==1){
-                                res.json({"message" : "Success;"+rows[0].pickUpAddress+";"+rows[0].remark+";"+rows[0].objectId+";"+rows[0].username+";"+rows[0].fee});
+                                res.json({"message" : "Success;"+rows[0].pickUpAddress+";"+rows[0].remark+";"+rows[0].objectId+";"+rows[0].username+";"+rows[0].fee+";"+rows[0].promocode});
                             }else{
                                 res.json({"message" : "error;"});
                             }

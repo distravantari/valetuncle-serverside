@@ -12,7 +12,7 @@ var express = require("express"),
 	rollbar.init("1ae39e54dddd453594a7c3b0b2095ce4");
 
 	// record a generic message and send to rollbar
-	rollbar.reportMessage("server started");
+	rollbar.reportMessage("teting server has been restarted");
 
 // require model
 var userModel = require("./model/users.js");

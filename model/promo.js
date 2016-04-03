@@ -56,7 +56,7 @@ promo.prototype.handleRoutes = function(router,connection){
                  }else{
                   //  is prows.length == 0 ?
                    if (prows.length == 0) {
-                     val = "false";
+                     val = "false no available promo";
                    }else{
                      //  prows[0].day == null ?
                      if (prows[0].day == null || prows[0].day == undefined) {
@@ -64,7 +64,7 @@ promo.prototype.handleRoutes = function(router,connection){
                       if (Number(prows[0].limit) >= rows.length) {
                         val = "true";
                       }else{
-                        val = "false";
+                        val = "false limit promo exceeded";
                       }
                      }
                      //  prows[0].day != null ?
@@ -76,7 +76,7 @@ promo.prototype.handleRoutes = function(router,connection){
                         val = "true";
                       }else{
                         //  prows[0].limit >= rows.length ?
-                        val = "false";
+                        val = "false promo day is not valid "+todayInt;
                       }
                      }
                    }

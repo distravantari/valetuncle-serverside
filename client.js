@@ -33,16 +33,6 @@ var autoAccept = {
 
 function myFunction() {
     var option = autoRequest;
-    // var ct = randomInt();
-
-    // if(ct == 1){
-    //   option = autoAccept; // res = successfully delete transaction
-    // }else if (ct == 2){
-    //   option = autoCancel // res = yes
-    // }else if (ct == 3){
-    //   option = autoRequest; // res = success
-    // }
-
     request.post(option,function(error,httpResponse,body){
         if (!error && httpResponse.statusCode == 200) {
           console.log(body)
@@ -50,15 +40,9 @@ function myFunction() {
           console.log(body)
         }
     });
-
-    // setTimeout(myFunction, 3000); // two minutes
 }
 
 
 
 
 myFunction();
-
-// function randomInt() {
-//   return Math.floor(Math.random() * (3 - 1 + 1)) + 1;
-// }

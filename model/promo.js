@@ -76,7 +76,7 @@ promo.prototype.handleRoutes = function(router,connection){
                         val = "true";
                       }else{
                         //  prows[0].limit >= rows.length ?
-                        val = "false promo day is not valid "+todayInt;
+                        val = "false promo day is not valid "+prows[0].day;
                       }
                      }
                    }

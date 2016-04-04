@@ -36,18 +36,7 @@ promo.prototype.handleRoutes = function(router,connection){
           if(err){
               res.json({"message":query});
           }else{
-              var val = "true";
-
-              // old one
-              // for (var i = 0; i < rows.length; i++) {
-              //     if(promocode == rows[i].promocode){
-              //         val = "false";
-              //         i = rows.length;
-              //     }else{
-              //         val = "true";
-              //     }
-              // }
-              // res.json({"message":val});
+              var val;
 
               // new one
               connection.query(proquery,function(err,prows){
@@ -61,7 +50,7 @@ promo.prototype.handleRoutes = function(router,connection){
                      //  prows[0].day == null ?
                      if (prows[0].day == null || prows[0].day == undefined) {
                       //  prows[0].limit >= rows.length ?
-                      if (Number(prows[0].limit) >= rows.length) {
+                      if (Number(prows[0].limit) > rows.length) {
                         val = "true";
                       }else{
                         val = "false limit promo exceeded";
@@ -73,7 +62,12 @@ promo.prototype.handleRoutes = function(router,connection){
                        var todayInt = today.getDay();
                       //  prows[0].day != null ? todayInt ?
                       if (prows[0].day == todayInt ) {
-                        val = "true";
+                        // val = "true";
+                        if (Number(prows[0].limit) > rows.length) {
+                          val = "true";
+                        }else{
+                          val = "false limit promo exceeded";
+                        }
                       }else{
                         //  prows[0].limit >= rows.length ?
                         val = "false promo day is not valid "+prows[0].day;

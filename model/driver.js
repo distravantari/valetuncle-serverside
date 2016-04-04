@@ -268,13 +268,13 @@ driver.prototype.handleRoutes = function(router,connection,md5) {
             //credit = results[0].credit;
             credit = results[0].credit;
 //            if (status == 1) {
-                if (credit>5) {
-                    flag = 1;
-                    var table = ["driver","flag",flag,"objectId",id];
-                } else{
-                    flag=0;
-                    var table = ["driver","flag",flag,"objectId",id];
-                };
+              if (credit>5) {
+                  flag = 1;
+                  var table = ["driver","flag",flag,"objectId",id];
+              } else{
+                  flag=0;
+                  var table = ["driver","flag",flag,"objectId",id];
+              };
 
             query = mysql.format(query,table);
             connection.query(query,function(err,rows){
@@ -325,20 +325,24 @@ driver.prototype.handleRoutes = function(router,connection,md5) {
     });
 
     // LOGIN
-    router.post("/loginDriver",function(req,res){
+      router.post("/loginDriver",function(req,res){
         var imei = req.body.imei;
         var query = "SELECT idNumber,IMEI,objectId FROM driver where idNumber ='"+req.body.idNumber+"'";
         connection.query(query,function(err,user){
             if(err){
                 res.json({"message":"err.."});
             }else {
-              if (user[0].idNumber == 'undefined' || user[0].idNumber == '') {
-                  res.json({"message":"error this user id "+user[0].objectId+" not recognize" });
+              if (user.length <= 0) {
+                res.json({"message":"error this user id "+req.body.idNumber+" not recognize" });
               }else{
-                if(user[0].IMEI == imei){
-                    res.json({"message":"success "+user[0].objectId});
+                if (user[0].idNumber == 'undefined' || user[0].idNumber == '') {
+                    res.json({"message":"error this user id "+user[0].objectId+" not recognize" });
                 }else{
-                    res.json({"message":"error"});
+                  if(user[0].IMEI == imei){
+                      res.json({"message":"success "+user[0].objectId});
+                  }else{
+                      res.json({"message":"error"});
+                  }
                 }
               }
             }

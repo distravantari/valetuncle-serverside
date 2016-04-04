@@ -315,30 +315,34 @@ user.prototype.handleRoutes = function(router,connection,md5) {
             if(err){
                 res.json({"message":"error"});
             }else {
-                if(user[0].statusLogin == 1){
-                    res.json({"message":"you have already login in another device"});
+                if (user.length <= 0) {
+                  res.json({"message":"wrong username"});
                 }else{
-                    if(user.length>=1){
-                        if (password != user[0].password){
-                            res.json({"message":"password incorrect"});
-                        }else{
-                            connection.query("UPDATE `user` SET statusLogin='1' WHERE username= '"+username+"'",function(err,state){
-                                if(err){
-                                    res.json({"message":"er.."});
-                                }else{
-                                    connection.query("SELECT confirm FROM user where username ='"+username+"'",function(err,ver){
-                                        if (ver[0].confirm=="verified"){
-                                            res.json({"message":"verified"});
-                                        }else {
-                                            res.json({"message":"not verified"});
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    }else{
-                        res.json({"message":"wrong username"});
-                    }
+                  if(user[0].statusLogin == 1){
+                      res.json({"message":"you have already login in another device"});
+                  }else{
+                      if(user.length>=1){
+                          if (password != user[0].password){
+                              res.json({"message":"password incorrect"});
+                          }else{
+                              connection.query("UPDATE `user` SET statusLogin='1' WHERE username= '"+username+"'",function(err,state){
+                                  if(err){
+                                      res.json({"message":"er.."});
+                                  }else{
+                                      connection.query("SELECT confirm FROM user where username ='"+username+"'",function(err,ver){
+                                          if (ver[0].confirm=="verified"){
+                                              res.json({"message":"verified"});
+                                          }else {
+                                              res.json({"message":"not verified"});
+                                          }
+                                      });
+                                  }
+                              });
+                          }
+                      }else{
+                          res.json({"message":"wrong username"});
+                      }
+                  }
                 }
             }
         });
@@ -1058,7 +1062,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
     });
 
     // end of advance
-        
+
     //MULTIPLE DRIVER STARTS FROM HERE
     //findNearestDriver(transId)
     router.post("/findNearestDriver_multipledriver",function(req,res){

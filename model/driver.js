@@ -266,7 +266,7 @@ driver.prototype.handleRoutes = function(router,connection,md5) {
         connection.query("SELECT * from driver WHERE objectId = "+id,function(err,results){
             // status = results[0].status;
             //credit = results[0].credit;
-            credit = results.credit;
+            credit = results[0].credit;
 //            if (status == 1) {
                 if (credit>5) {
                     flag = 1;

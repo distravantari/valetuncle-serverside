@@ -332,11 +332,15 @@ driver.prototype.handleRoutes = function(router,connection,md5) {
             if(err){
                 res.json({"message":"err.."});
             }else {
+              if (user[0].idNumber == 'undefined' || user[0].idNumber == '') {
+                  res.json({"message":"error this user id "+user[0].objectId+" not recognize" });
+              }else{
                 if(user[0].IMEI == imei){
                     res.json({"message":"success "+user[0].objectId});
                 }else{
                     res.json({"message":"error"});
                 }
+              }
             }
         });
     });

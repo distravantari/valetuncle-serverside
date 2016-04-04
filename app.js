@@ -12,7 +12,7 @@ var express = require("express"),
 	rollbar.init("1ae39e54dddd453594a7c3b0b2095ce4");
 
 	// record a generic message and send to rollbar
-	rollbar.reportMessage("teting server has been restarted");
+	rollbar.reportMessage("development server has been restarted");
 
 // require model
 var userModel = require("./model/users.js");
@@ -22,6 +22,7 @@ var transactionModel = require("./model/transaction.js");
 var historyModel = require("./model/history.js");
 var promoModel = require("./model/promo.js");
 var multidriverModel = require("./model/multidriver.js");
+var dashboardModel = require("./model/dashboard.js");
 // end of require model
 
 var app = express();
@@ -184,6 +185,7 @@ connect.prototype.configureExpress = function(connection) {
 				var history = new historyModel(router,connection,md5);
 				var promo = new promoModel(router,connection,md5);
 				var multidriver = new multidriverModel(router,connection);
+				var dashboard = new dashboardModel(router,connection);
 				// end of calling model
 
         self.startServer();

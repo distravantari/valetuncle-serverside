@@ -495,8 +495,8 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                       } else{
                           // we are using kilometers
                           var inKilometers = 0;
-                          //connection.query("SELECT flag,status,location,objectId from driver where flag = 1 and status = 1 Order by RAND()",function(err,queryDriver){
-                            connection.query("SELECT flag,status,location,objectId from driver where flag = 1 and status = 1 and objectId IN (SELECT driverId FROM transaction where status = 'advance' AND (advanceTime > NOW() + INTERVAL 9 HOUR)) UNION SELECT flag,status,location,objectId from driver where flag = 1 and status = 1 and objectId NOT IN (SELECT driverId FROM transaction where status = 'advance')",function(err,queryDriver){
+                            //connection.query("SELECT flag,status,location,objectId from driver where flag = 1 and status = 1 Order by RAND()",function(err,queryDriver){
+                            connection.query("SELECT flag,status,location,objectId from driver where flag = 1 and status = 1 Order by priority ASC,RAND()",function(err,queryDriver){
                             //connection.query("SELECT flag,status,location,objectId from driver where flag = 1 and status = 1 and objectId IN (SELECT driverId FROM transaction where status = 'advance' AND (advanceTime > NOW() + INTERVAL 2 HOUR)) Order by RAND()",function(err,queryDriver){
                               if(err){
                                   res.json({"message":"error"});
@@ -535,7 +535,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                                   var whosDecline = rows[0].whosDecline;
                                   //split whosdecline and driver nearby
                                   driver = driverNearby.split(";");
-                                  // check whosDecline , kalo kosong seua masuk ke notbanned
+                                  // check whosDecline , if there is banned driver
                                   if ((whosDecline != null)&&(whosDecline != "")&&(whosDecline != undefined)) {
 
                                       banned = whosDecline.split(";");
@@ -543,19 +543,21 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                                       j=0;
                                       for (var i=0; i < driver.length; ++i){
                                           if (banned.indexOf(driver[i]) == -1){
+                                              // insert no banned driver to an array (notbanned)
                                               notbanned[j++] = driver[i];
                                           };
                                       };
 
-                                  }else{
+                                  }
+                                  // if there is no driver banned
+                                  else{
+                                      // insert all driver to not banned array
                                       notbanned = driver;
                                   }
-      //                            res.json({"asdad":notbanned});
 
                                   if(notbanned.length==1&&notbanned[0]==""){
                                       res.json({"message":"no driver around you "});
                                   }else{
-                                      // res.json({"message":"ULALA"});
                                       var query = "UPDATE transaction SET driverTemp = ? WHERE objectId = "+transId;
                                       var table = [notbanned[0]];
                                       query = mysql.format(query,table);
@@ -578,6 +580,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                                           }
                                       });
                                   };
+
                               }
                           });
                       }

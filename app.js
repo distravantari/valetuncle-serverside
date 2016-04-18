@@ -23,6 +23,7 @@ var historyModel = require("./model/history.js");
 var promoModel = require("./model/promo.js");
 var multidriverModel = require("./model/multidriver.js");
 var dashboardModel = require("./model/dashboard.js");
+var bookingModel = require("./model/booking.js");
 // end of require model
 
 var app = express();
@@ -186,6 +187,7 @@ connect.prototype.configureExpress = function(connection) {
 				var promo = new promoModel(router,connection,md5);
 				var multidriver = new multidriverModel(router,connection);
 				var dashboard = new dashboardModel(router,connection);
+				var booking = new bookingModel(router,connection);
 				// end of calling model
 
         self.startServer();

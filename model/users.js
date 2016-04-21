@@ -771,6 +771,38 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         });
     });
 
+    router.post("/feeMessageWhenTryAgain",function(req,res){
+        var username = req.params.username || req.body.username;
+        var query = "SELECT * from transaction where username = '"+username+"' and status = 'active') ;";
+        connection.query(query,function(err,rows){
+            if(err) {
+                res.json({"message" : "error"});
+            } 
+            else if(rows[0].promocode==null || rows[0].promocode=="" || rows[0].promocode=="-")
+            {
+                var query = "SELECT * FROM setting";
+                connection.query(query,function(err,rows){
+                    if(err) {
+                        res.json({"Error" : true, "Message" : "Error executing MySQL query"});
+                    } else {
+                        res.json({"Error" : false, "Message" : "Success", "Trans" : rows});
+                    }
+                });
+            }
+            else
+            {
+                var query = "SELECT * FROM promo where code = '"+rows[0].promocode+"'";
+                connection.query(query,function(err,rows){
+                    if(err) {
+                        res.json({"Error" : true, "Message" : "Error executing MySQL query"});
+                    } else {
+                        res.json({"Error" : false, "Message" : "Success", "Trans" : rows});
+                    }
+                });
+            } 
+        });
+    });
+
     // cek if the devisit <= 1, yes -> push, no -> keep looping
      router.post("/checkTurnAdvance",function(req,res){
         var driverId = req.body.driverId;

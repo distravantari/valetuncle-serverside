@@ -773,7 +773,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
 
     router.post("/feeMessageWhenTryAgain",function(req,res){
         var username = req.params.username || req.body.username;
-        var query = "SELECT * from transaction where username = '"+username+"' and status = 'active') ;";
+        var query = "SELECT * from transaction where username = '"+username+"' and status = 'active' ;";
         connection.query(query,function(err,rows){
             if(err) {
                 res.json({"message" : "error"});

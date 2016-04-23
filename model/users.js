@@ -21,7 +21,8 @@ user.prototype.handleRoutes = function(router,connection,md5) {
 
         //check the hour
         var hour = time.toString().split(':');
-        if (day == 'Sat' || day == 'Sun') { // if today is saturday/sunday
+        // if today is saturday/sunday
+        if (day == 'Sat' || day == 'Sun') {
             if (hour[0] == '20') {// 4 am
                 // price = $45
                 if(hour[1] == '30'){
@@ -43,12 +44,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                 //price $35
                 price = 35;
             }
-            // if(hour[0] == '10'){
-            //     price = 57;
-            // }
         }
-        //  console.log('price :'+price);
-        //set price
         var setPV = {
         url: 'http://52.76.73.21:3000/api/valetprice',
             form: {
@@ -65,6 +61,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         });
       };
     //end of scheduler checkTime_edit
+    
 
     //push notif ios
     router.post("/pushNotif",function(req,res){

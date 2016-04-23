@@ -12,6 +12,60 @@ function user(router,connection,md5) {
 user.prototype.handleRoutes = function(router,connection,md5) {
     var self = this;
 
+    //scheduler checkTime_edit
+    function checked(){
+        var now = new Date();
+        var splitD = now.toString().split(" ");
+        var day = splitD[0];
+        var time = splitD[4];
+
+        //check the hour
+        var hour = time.toString().split(':');
+        if (day == 'Sat' || day == 'Sun') { // if today is saturday/sunday
+            if (hour[0] == '20') {// 4 am
+                // price = $45
+                if(hour[1] == '30'){
+                    price = 45;
+                }
+            }
+            // if (time == '00:22:00') {//price $35}
+            if(hour[0] == '14') {
+                //price $35
+                price = 35;
+            }
+        }else{ // monday etc..
+            if (hour[0] == '20') {// 4 am
+                // price = $45
+                price = 45;
+            }
+            // if (time == '00:22:00') {//price $35}
+            if(hour[0] == '14') {
+                //price $35
+                price = 35;
+            }
+            // if(hour[0] == '10'){
+            //     price = 57;
+            // }
+        }
+        //  console.log('price :'+price);
+        //set price
+        var setPV = {
+        url: 'http://52.76.73.21:3000/api/valetprice',
+            form: {
+                token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0NDgwODY2NTd9.IK0ZCmhno2M_JxaN4Gw8q1Zl1XfAGslCBtqIGxnOs-w',
+                prices: price
+            }
+        };
+        request.post(setPV,function(error,httpResponse,body){
+            if (!error && httpResponse.statusCode == 200) {
+                console.log(body)
+            }else{
+                console.log(body)
+            }
+        });
+      };
+    //end of scheduler checkTime_edit
+
     //push notif ios
     router.post("/pushNotif",function(req,res){
 
@@ -777,7 +831,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         connection.query(query,function(err,rows){
             if(err) {
                 res.json({"message" : "error"});
-            } 
+            }
             else if(rows[0].promocode==null || rows[0].promocode=="" || rows[0].promocode=="-")
             {
                 var query = "SELECT * FROM setting";
@@ -799,7 +853,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                         res.json({"Error" : false, "Message" : rows[0].description});
                     }
                 });
-            } 
+            }
         });
     });
 

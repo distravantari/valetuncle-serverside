@@ -61,7 +61,6 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         });
       };
     //end of scheduler checkTime_edit
-    
 
     //push notif ios
     router.post("/pushNotif",function(req,res){

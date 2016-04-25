@@ -43,30 +43,25 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         //check the hour
         var hour = time.toString().split(':');
         if (day == 'Sat' || day == 'Sun') { // if today is saturday/sunday
-            if (hour[0] == '20') {// 4 am
-                // price = $45
-                if(hour[1] == '30'){
-                    price = 45;
-                }
-            }
-            // if (time == '00:22:00') {//price $35}
-            if(hour[0] == '14') {
-                //price $35
-                price = 35;
-            }
-        }else{ // monday etc..
-            if (hour[0] == '20') {// 4 am
+            if (hour[0] == '19') {// 3 am
                 // price = $45
                 price = 45;
             }
             // if (time == '00:22:00') {//price $35}
-            if(hour[0] == '14') {
+            if(hour[0] == '12') {
                 //price $35
                 price = 35;
             }
-            // if(hour[0] == '10'){
-            //     price = 57;
-            // }
+        }else{ // monday etc..
+            if (hour[0] == '19') {// 4 am
+                // price = $45
+                price = 45;
+            }
+            // if (time == '00:22:00') {//price $35}
+            if(hour[0] == '12') {
+                //price $35
+                price = 35;
+            }
         }
         //  console.log('price :'+price);
         //set price

@@ -12,8 +12,29 @@ function user(router,connection,md5) {
 user.prototype.handleRoutes = function(router,connection,md5) {
     var self = this;
 
-    //scheduler checkTime_edit
-    function checked(){
+    //change valet price on specific time
+     router.post("/valetprice",function(req,res){
+        var now = new Date();
+        var msg = "'The fee will be charged at $"+req.body.prices+". Any additional drop off will be at an extra charge of $10 per location.'";
+        var query = "UPDATE `setting` SET fee = "+req.body.prices+",message = "+msg;
+        connection.query(query,function(err,rows){
+            if(err) {
+                res.json({"message ":query});
+            } else {
+                res.json({"message":"price :"+req.body.prices+" on "+now});
+            }
+        });
+    });
+
+    //   var now = new Date(); //Mon Feb 29 2016 23:30:22 GMT+0700 (SE Asia Standard Time)
+      // localStorage.setItem('thisTime',now);
+      // check the time and days
+
+      //set price
+      var price;
+
+      var checkD = setInterval(function(){checked()}, 600);// ten minutes 600000
+      function checked(){
         var now = new Date();
         var splitD = now.toString().split(" ");
         var day = splitD[0];
@@ -21,8 +42,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
 
         //check the hour
         var hour = time.toString().split(':');
-        // if today is saturday/sunday
-        if (day == 'Sat' || day == 'Sun') {
+        if (day == 'Sat' || day == 'Sun') { // if today is saturday/sunday
             if (hour[0] == '20') {// 4 am
                 // price = $45
                 if(hour[1] == '30'){
@@ -44,7 +64,12 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                 //price $35
                 price = 35;
             }
+            // if(hour[0] == '10'){
+            //     price = 57;
+            // }
         }
+        //  console.log('price :'+price);
+        //set price
         var setPV = {
         url: 'http://52.76.73.21:3000/api/valetprice',
             form: {
@@ -60,7 +85,6 @@ user.prototype.handleRoutes = function(router,connection,md5) {
             }
         });
       };
-    //end of scheduler checkTime_edit
 
     //push notif ios
     router.post("/pushNotif",function(req,res){

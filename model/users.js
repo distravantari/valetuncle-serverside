@@ -26,14 +26,11 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         });
     });
 
-    //   var now = new Date(); //Mon Feb 29 2016 23:30:22 GMT+0700 (SE Asia Standard Time)
-      // localStorage.setItem('thisTime',now);
-      // check the time and days
-
       //set price
       var price;
 
-      var checkD = setInterval(function(){checked()}, 600);// ten minutes 600000
+      var checkD = setInterval(function(){checked()}, 60000);// ten minutes 600000
+
       function checked(){
         var now = new Date();
         var splitD = now.toString().split(" ");
@@ -43,27 +40,27 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         //check the hour
         var hour = time.toString().split(':');
         if (day == 'Sat' || day == 'Sun') { // if today is saturday/sunday
-            if (hour[0] == '19') {// 3 am
+            if (hour[0] == '20') {// 3 am INA
                 // price = $45
                 price = 45;
             }
-            // if (time == '00:22:00') {//price $35}
-            if(hour[0] == '12') {
+            // if time = 07 PM
+            if(hour[0] == '11') {// 6 pm INA
                 //price $35
                 price = 35;
             }
         }else{ // monday etc..
-            if (hour[0] == '19') {// 4 am
+            if (hour[0] == '20') {// 3 am INA
                 // price = $45
                 price = 45;
             }
-            // if (time == '00:22:00') {//price $35}
-            if(hour[0] == '12') {
+            // if time = 07 PM
+            if(hour[0] == '11') {// 6 pm INA
                 //price $35
                 price = 35;
             }
         }
-        //  console.log('price :'+price);
+         console.log('price :'+now);
         //set price
         var setPV = {
         url: 'http://52.76.73.21:3000/api/valetprice',

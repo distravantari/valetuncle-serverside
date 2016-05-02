@@ -16,7 +16,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
      router.post("/valetprice",function(req,res){
         var now = new Date();
         var msg = "'The fee will be charged at $"+req.body.prices+". Any additional drop off will be at an extra charge of $10 per location.'";
-        var query = "UPDATE `setting` SET fee = "+req.body.prices+",message = "+msg;
+        var query = "UPDATE `setting` SET fee = "+req.body.prices+",message = "+msg+", message_preview ="+msg;
         connection.query(query,function(err,rows){
             if(err) {
                 res.json({"message ":query});
@@ -844,6 +844,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
             if(err) {
                 res.json({"message" : "error"});
             }
+            //no promocode
             else if(rows[0].promocode==null || rows[0].promocode=="" || rows[0].promocode=="-")
             {
                 var query = "SELECT * FROM setting";
@@ -851,18 +852,39 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                     if(err) {
                         res.json({"Error" : true, "Message" : "Error executing MySQL query"});
                     } else {
-                        res.json({"Error" : false, "Message" : rows[0].message_preview});
+                        connection.query("UPDATE `transaction` SET fee = "+rows[0].fee,function(err,update){
+                          if (err) {
+                            res.json({"Error" : true, "Message" : "error can't update transaction"});
+                          }else{
+                              res.json({"Error" : false, "Message" : rows[0].message_preview});
+                          }
+                        });
                     }
                 });
             }
+            // there is promocode
             else
             {
                 var query = "SELECT * FROM promo where code = '"+rows[0].promocode+"'";
-                connection.query(query,function(err,rows){
+                connection.query(query,function(err,promo){
                     if(err) {
                         res.json({"Error" : true, "Message" : "Error executing MySQL query"});
                     } else {
-                        res.json({"Error" : false, "Message" : rows[0].description});
+                      var query2 = "SELECT * FROM setting";
+                      connection.query(query2,function(err,setting){
+                          if(err) {
+                              res.json({"Error" : true, "Message" : "Error executing MySQL query"});
+                          } else {
+                            var newFee = (setting[0].fee * (promo[0].discount/100)) - setting[0].fee;
+                              connection.query("UPDATE `transaction` SET fee = "+newFee,function(err,update){
+                                if (err) {
+                                  res.json({"Error" : true, "Message" : "error can't update transaction"});
+                                }else{
+                                    res.json({"Error" : false, "Message" : rows[0].message_preview});
+                                }
+                              });
+                          }
+                      });
                     }
                 });
             }

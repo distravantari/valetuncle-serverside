@@ -880,7 +880,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                                 if (err) {
                                   res.json({"Error" : true, "Message" : "error can't update transaction"});
                                 }else{
-                                    res.json({"Error" : false, "Message" : rows[0].message_preview});
+                                    res.json({"Error" : false, "Message" : promo[0].description});
                                 }
                               });
                           }

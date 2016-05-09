@@ -81,14 +81,14 @@ connect.prototype.connectMysql = function() {
      sconnectionLimit : 100,
      multipleStatements: true,
 		 module		: 'sails-mysql',
-    //  host     : '52.76.73.21',
-    //  user     : 'edwinslab',
-    //  password : 'edwinslab888',
-    //  database : 'valletUncle',
-		host     : 'valetunclelive.crdghclhttrn.ap-southeast-1.rds.amazonaws.com',
-		user     : 'vu_userdb',
-		password : 'damn5hitfuck5ake',
-		database : 'valetuncle',
+     host     : '52.76.73.21',
+     user     : 'edwinslab',
+     password : 'edwinslab888',
+     database : 'valletUncle',
+		// host     : 'valetunclelive.crdghclhttrn.ap-southeast-1.rds.amazonaws.com',
+		// user     : 'vu_userdb',
+		// password : 'damn5hitfuck5ake',
+		// database : 'valetuncle',
      debug    :  false
   });
 

@@ -15,7 +15,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
     //change valet price on specific time
      router.post("/valetprice",function(req,res){
         var now = new Date();
-        var msg = "'The fee will be charged at $"+req.body.prices+". Any additional drop off will be at an extra charge of $10 per location.'";
+        var msg = "'The fee will be charged at $"+req.body.prices+". Any additional drop off will be at an extra charge of $10 per location. Any prevailing Entrance fees or ERP charges will be Charged accordingly'";
         var query = "UPDATE `setting` SET fee = "+req.body.prices+",message = "+msg+", message_preview ="+msg;
         connection.query(query,function(err,rows){
             if(err) {

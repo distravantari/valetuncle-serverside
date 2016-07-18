@@ -3,8 +3,11 @@ valetuncle-serverside is an API for valet uncle mobile application using express
 
 > testing IP address: 52.76.211.241  
 > production IP address: 52.76.73.21  
-> database: 52.76.73.21/edwinslab/edwinslab888/3306  
-
+- database:  
+  - host     : 'valetunclelive.crdghclhttrn.ap-southeast-1.rds.amazonaws.com',  
+  - user     : 'vu_userdb',  
+  - password : 'damn5hitfuck5ake',  
+  - database : 'valetuncle'
 ## PROMO
 #### POST: /checkPromo
 check wether the promocode is valid or invalid

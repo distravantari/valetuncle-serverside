@@ -44,20 +44,26 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                 // price = $45
                 price = 45;
             }
-            // if time = 07 PM
+            // if time = 07 PM SING
             if(hour[0] == '11') {// 6 pm INA
                 //price $35
                 price = 35;
+            }
+            if(hour[0] == '21'){// 4 am INA
+              price = 55;
             }
         }else{ // monday etc..
             if (hour[0] == '20') {// 3 am INA
                 // price = $45
                 price = 45;
             }
-            // if time = 07 PM
+            // if time = 07 PM SING
             if(hour[0] == '11') {// 6 pm INA
                 //price $35
                 price = 35;
+            }
+            if(hour[0] == '21'){// 4 am INA
+              price = 55;
             }
         }
          console.log('price :'+now);

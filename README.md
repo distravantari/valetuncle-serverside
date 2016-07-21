@@ -399,3 +399,27 @@ params : x-www-form-urlencoded
     - transId: you know this shit(2)
 response : {"message":"__"}
 ```
+
+## How to run it as service on ec2 amazon webservice based on UDEMY video
+  link: https://www.udemy.com/all-about-nodejs/learn/v4/overview
+1. sudo apt-get install upstart
+2. cd /etc/init
+3. sudo vim appname.conf
+```sh
+description "application name"
+
+start on started mountall
+stop on shutdown
+
+respawn
+respawn limit 99 5
+
+env NODE_ENV=production
+
+exec node /.. '<app.js location on your server>' >> /var/log/applicationname.log 2>&1
+```
+4. click esc
+5. :wq and enter
+
+6. then you can just run : sudo start applicationname for running the app
+7. and sudo stop applicationname for stopping the app

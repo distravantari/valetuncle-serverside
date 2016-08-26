@@ -210,7 +210,8 @@ driver.prototype.handleRoutes = function(router,connection,md5) {
                                     driverHistory = hist.length+1;
                                 }
 
-                                rating = Number(temp) / Number(driverHistory);
+                                // rating = Number(temp) / Number(driverHistory); //SET total rating based on rating that each customer gave
+                                rating = 5; // MELVIN ASK ME TO DO THIS
                                 var query = "UPDATE driver SET rating = ? WHERE objectId= "+driverId;
                                 var table = [rating];
                                 query = mysql.format(query,table);

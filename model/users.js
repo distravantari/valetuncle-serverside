@@ -39,6 +39,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
 
         //check the hour
         var hour = time.toString().split(':');
+
         // OLD SHIT NEVER END
         // if (day == 'Sat' || day == 'Sun') { // if today is saturday/sunday
         //     if (hour[0] == '20') {// 3 am INA
@@ -73,11 +74,11 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         if (day == 'Fri' || day == 'Sat') {
               if (hour[0] == '22') {// 5 am INA
                   // price = $45
-                  if (Number(hour[1]) > 30) { // 5.30 am INA
+                  if (hour[1] == '30') { // 5.30 am INA
                     price = 45;
                   }
               }
-              if(Number(hour[0]) >= 14 && Number(hour[0]) <= 22 && Number(hour[1]) > 30) {// 9 pm INA - 5.30 am INA
+              if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22 && Number(hour[1]) > 30) {// 9 pm INA - 5.30 am INA
                   //price $35
                   price = 35;
               }
@@ -88,7 +89,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
           if (hour[0] == '22') {// 5 am INA
                 price = 45;
           }
-          if(Number(hour[0]) >= 14 && Number(hour[0]) <= 22) {// 9 pm INA - 5.30 am INA
+          if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22) {// 9 pm INA - 5.30 am INA
               //price $35
               price = 35;
           }

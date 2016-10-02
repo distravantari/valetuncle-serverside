@@ -71,13 +71,34 @@ user.prototype.handleRoutes = function(router,connection,md5) {
         // THE END OF OLD SHIT NEVER END
 
         // NEW SHIT
+        // if (day == 'Fri' || day == 'Sat') {
+        //       if (hour[0] == '22') {// 5 am INA
+        //           // price = $45
+        //           if (hour[1] == '30') { // 5.30 am INA
+        //             price = 45;
+        //           }
+        //       }
+        //       if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22 && Number(hour[1]) > 30) {// 9 pm INA - 5.30 am INA
+        //           //price $35
+        //           price = 35;
+        //       }
+        //       else{
+        //         price = 45;
+        //       }
+        // }else{
+        //   if (hour[0] == '22') {// 5 am INA
+        //         price = 45;
+        //   }
+        //   if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22) {// 9 pm INA - 5.30 am INA
+        //       //price $35
+        //       price = 35;
+        //   }
+        //   else{
+        //     price = 45;
+        //   }
+        // }
+        // END OF NEW SHIT
         if (day == 'Fri' || day == 'Sat') {
-              if (hour[0] == '22') {// 5 am INA
-                  // price = $45
-                  if (hour[1] == '30') { // 5.30 am INA
-                    price = 45;
-                  }
-              }
               if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22 && Number(hour[1]) > 30) {// 9 pm INA - 5.30 am INA
                   //price $35
                   price = 35;
@@ -86,22 +107,19 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                 price = 45;
               }
         }else{
-          if (hour[0] == '22') {// 5 am INA
-                price = 45;
-          }
           if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22) {// 9 pm INA - 5.30 am INA
-              //price $35
-              price = 35;
+              //price $45
+              price = 45;
           }
           else{
-            price = 45;
+            price = 35;
           }
         }
-        // END OF NEW SHIT
-         console.log('price :'+now);
+
+        console.log('price :'+time);
         //set price
         var setPV = {
-        url: 'http://52.76.73.21:3000/api/valetprice',
+            url: 'http://52.76.73.21:3000/api/valetprice',
             form: {
                 token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0NDgwODY2NTd9.IK0ZCmhno2M_JxaN4Gw8q1Zl1XfAGslCBtqIGxnOs-w',
                 prices: price

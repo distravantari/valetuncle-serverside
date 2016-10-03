@@ -39,64 +39,6 @@ user.prototype.handleRoutes = function(router,connection,md5) {
 
         //check the hour
         var hour = time.toString().split(':');
-
-        // OLD SHIT NEVER END
-        // if (day == 'Sat' || day == 'Sun') { // if today is saturday/sunday
-        //     if (hour[0] == '20') {// 3 am INA
-        //         // price = $45
-        //         price = 45;
-        //     }
-        //     // if time = 07 PM SING
-        //     if(hour[0] == '11') {// 6 pm INA
-        //         //price $35
-        //         price = 35;
-        //     }
-        //     if(hour[0] == '21'){// 4 am INA
-        //       price = 55;
-        //     }
-        // }else{ // monday etc..
-        //     if (hour[0] == '20') {// 3 am INA
-        //         // price = $45
-        //         price = 45;
-        //     }
-        //     // if time = 07 PM SING
-        //     if(hour[0] == '11') {// 6 pm INA
-        //         //price $35
-        //         price = 35;
-        //     }
-        //     if(hour[0] == '21'){// 4 am INA
-        //       price = 55;
-        //     }
-        // }
-        // THE END OF OLD SHIT NEVER END
-
-        // NEW SHIT
-        // if (day == 'Fri' || day == 'Sat') {
-        //       if (hour[0] == '22') {// 5 am INA
-        //           // price = $45
-        //           if (hour[1] == '30') { // 5.30 am INA
-        //             price = 45;
-        //           }
-        //       }
-        //       if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22 && Number(hour[1]) > 30) {// 9 pm INA - 5.30 am INA
-        //           //price $35
-        //           price = 35;
-        //       }
-        //       else{
-        //         price = 45;
-        //       }
-        // }else{
-        //   if (hour[0] == '22') {// 5 am INA
-        //         price = 45;
-        //   }
-        //   if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22) {// 9 pm INA - 5.30 am INA
-        //       //price $35
-        //       price = 35;
-        //   }
-        //   else{
-        //     price = 45;
-        //   }
-        // }
         // END OF NEW SHIT
         if (day == 'Fri' || day == 'Sat') {
               if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22 && Number(hour[1]) > 30) {// 9 pm INA - 5.30 am INA
@@ -116,7 +58,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
           }
         }
 
-        console.log('price :'+time);
+        console.log('price at'+day+" "time+" is: "+price);
         //set price
         var setPV = {
             url: 'http://52.76.73.21:3000/api/valetprice',

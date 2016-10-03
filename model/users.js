@@ -32,7 +32,13 @@ user.prototype.handleRoutes = function(router,connection,md5) {
       var checkD = setInterval(function(){checked()}, 60000);// ten minutes 600000
 
       function checked(){
+
+
+      	var Moment = require('moment-timezone');
+      	var test = Moment().tz('Asia/Singapore').format();
+        console.log('now: '+test);
         var now = new Date();
+        console.log('server: '+now);
         var splitD = now.toString().split(" ");
         var day = splitD[0];
         var time = splitD[4];

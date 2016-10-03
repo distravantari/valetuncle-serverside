@@ -58,7 +58,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
           }
         }
 
-        console.log('price at'+day+" "+time+" is: "+price);
+        console.log('price at '+day+" "+time+" is: "+price);
         //set price
         var setPV = {
             url: 'http://52.76.73.21:3000/api/valetprice',

@@ -35,36 +35,46 @@ user.prototype.handleRoutes = function(router,connection,md5) {
 
 
       	var Moment = require('moment-timezone');
-      	var test = Moment().tz('Asia/Singapore').format();
-        console.log('now: '+test);
-        var now = new Date();
-        console.log('server: '+now);
-        var splitD = now.toString().split(" ");
-        var day = splitD[0];
-        var time = splitD[4];
+      	var now = Moment().tz('Asia/Singapore').format('llll'); //Mon, Oct 3, 2016 6:00 PM
+        console.log('now: '+now);
+
+        var splitD = now.toString().split(","); //Mon || Oct 3 || 2016 6:00 PM
+        var day = splitD[0]; //Mon
+        var yearTime = splitD[2]; //2016 6:00 PM
+        console.log('yearTime: '+yearTime);
+        var splitY = yearTime.toString().split(" "); // 2016 || 6:00 || PM
+        console.log('splitY '+splitY);
+        var time = splitY[2];  //6
+        console.log('time '+time);
+        var timeSegment = splitY[3]; //PM
+        console.log('timeSegment',timeSegment);
 
         //check the hour
         var hour = time.toString().split(':');
         // END OF NEW SHIT
         if (day == 'Fri' || day == 'Sat') {
-              if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22 && Number(hour[1]) > 30) {// 9 pm INA - 5.30 am INA
+              if(Number(hour[0]) >= 10 && timeSegment == 'PM') {// 9 pm INA - 5.30 am INA
+                if (Number(hour[0]) <= 5 && Number(hour[1]) > 30 && timeSegment == 'AM') {
                   //price $35
                   price = 35;
+                }
               }
               else{
                 price = 45;
               }
         }else{
-          if(Number(hour[0]) >= 8 && Number(hour[0]) <= 22) {// 9 pm INA - 5.30 am INA
+          if(Number(hour[0]) >= 10 && timeSegment == 'PM') {// 9 pm INA - 5.00 am INA
+            if (Number(hour[0]) <= 5 && timeSegment == 'AM') {
               //price $45
               price = 45;
+            }
           }
           else{
             price = 35;
           }
         }
 
-        console.log('price at '+day+" "+time+" is: "+price);
+        // console.log('price at '+day+" "+time+" "+timeSegment+" is: "+price);
         //set price
         var setPV = {
             url: 'http://52.76.73.21:3000/api/valetprice',

@@ -81,7 +81,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
             price = 35;
           }
           else{
-            price = 35;
+            price = 45;
           }
           console.log('day from sun and thu');
         }

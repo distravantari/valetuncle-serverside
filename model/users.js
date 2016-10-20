@@ -29,17 +29,18 @@ user.prototype.handleRoutes = function(router,connection,md5) {
       //set price
       var price;
 
-      var checkD = setInterval(function(){checked()}, 60000);// ten minutes 600000
+      var checkD = setInterval(function(){checked()}, 6000);// ten minutes 600000
 
       function checked(){
 
-
+        console.log('========================');
       	var Moment = require('moment-timezone');
       	var now = Moment().tz('Asia/Singapore').format('llll'); //Mon, Oct 3, 2016 6:00 PM
         console.log('now: '+now);
 
         var splitD = now.toString().split(","); //Mon || Oct 3 || 2016 6:00 PM
         var day = splitD[0]; //Mon
+        console.log('day: ',day);
         var yearTime = splitD[2]; //2016 6:00 PM
         console.log('yearTime: '+yearTime);
         var splitY = yearTime.toString().split(" "); // 2016 || 6:00 || PM
@@ -51,30 +52,43 @@ user.prototype.handleRoutes = function(router,connection,md5) {
 
         //check the hour
         var hour = time.toString().split(':');
+        console.log('hour: ',hour[0]);
+        console.log('minutes: ',hour[1]);
+
+        var price  = 45;
+
         // END OF NEW SHIT
         if (day == 'Fri' || day == 'Sat') {
-              if(Number(hour[0]) >= 10 && timeSegment == 'PM') {// 9 pm INA - 5.30 am INA
-                if (Number(hour[0]) <= 5 && Number(hour[1]) > 30 && timeSegment == 'AM') {
-                  //price $35
-                  price = 35;
-                }
+              if(Number(hour[0]) >= 9 && timeSegment == 'PM') {// 9 pm SING - 4.30 am SING
+                //price $35
+                price = 35;
+              }
+              else if (Number(hour[0]) <= 4 && Number(hour[1]) > 30 && timeSegment == 'AM') {
+                //price $35
+                price = 35;
               }
               else{
                 price = 45;
               }
+              console.log('day between fri and sat');
         }else{
-          if(Number(hour[0]) >= 10 && timeSegment == 'PM') {// 9 pm INA - 5.00 am INA
-            if (Number(hour[0]) <= 5 && timeSegment == 'AM') {
-              //price $45
-              price = 45;
-            }
+          if(Number(hour[0]) >= 9 && timeSegment == 'PM') {// 9 pm SING - 4.00 am SING
+            //price $35
+            price = 35;
+          }
+          else if (Number(hour[0]) <= 4 && timeSegment == 'AM') { // 9 pm SING - 4.00 am SING
+            //price $35
+            price = 35;
           }
           else{
             price = 35;
           }
+          console.log('day from sun and thu');
         }
 
-        // console.log('price at '+day+" "+time+" "+timeSegment+" is: "+price);
+        console.log('price :',price);
+        console.log('price at '+day+" "+time+" "+timeSegment+" is: "+price);
+        console.log('========================');
         //set price
         var setPV = {
             url: 'http://52.76.73.21:3000/api/valetprice',

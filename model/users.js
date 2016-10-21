@@ -62,26 +62,32 @@ user.prototype.handleRoutes = function(router,connection,md5) {
               if(Number(hour[0]) >= 9 && timeSegment == 'PM') {// 9 pm SING - 4.30 am SING
                 //price $35
                 price = 35;
+                console.log('SEGMENT: above 9 PM');
               }
               else if (Number(hour[0]) <= 4 && Number(hour[1]) > 30 && timeSegment == 'AM') {
                 //price $35
                 price = 35;
+                console.log('SEGMENT: below 4 AM');
               }
               else{
                 price = 45;
+                console.log('SEGMENT: other');
               }
               console.log('day between fri and sat');
         }else{
           if(Number(hour[0]) >= 9 && timeSegment == 'PM') {// 9 pm SING - 4.00 am SING
             //price $35
             price = 35;
+            console.log('SEGMENT: above 9 PM');
           }
           else if (Number(hour[0]) <= 4 && timeSegment == 'AM') { // 9 pm SING - 4.00 am SING
             //price $35
             price = 35;
+            console.log('SEGMENT: below 4 AM');
           }
           else{
             price = 45;
+            console.log('SEGMENT: other');
           }
           console.log('day from sun and thu');
         }

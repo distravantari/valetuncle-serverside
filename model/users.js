@@ -64,10 +64,15 @@ user.prototype.handleRoutes = function(router,connection,md5) {
                 price = 35;
                 console.log('SEGMENT: above 9 PM');
               }
-              else if (Number(hour[0]) <= 4 && Number(hour[1]) > 30 && timeSegment == 'AM') {
+              else if (Number(hour[0]) < 4 && timeSegment == 'AM') {
                 //price $35
                 price = 35;
                 console.log('SEGMENT: below 4 AM');
+              }
+              else if (Number(hour[0]) == 4 && Number(hour[1]) < 30 && timeSegment == 'AM') {
+                //price $35
+                price = 35;
+                console.log('SEGMENT: below 4.30 AM');
               }
               else{
                 price = 45;

@@ -408,7 +408,6 @@
 var mysql   = require("mysql");
 var GeoPoint = require("geopoint");
 var request = require('request');
-var md5 = require('md5');
 
 function transaction(router,connection,md5) {
     var self = this;
@@ -558,7 +557,7 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
 
     router.delete("/transaction",function(req,res){
         var username = req.body.username;
-        connection.query("SELECT  t.objectId, u.password FROM transaction t JOIN user u ON(t.objectId = u.objectId) WHERE t.username= '"+username+"' and t.status = 'active' ",function(err,rows){
+        connection.query("SELECT  t.objectId, u.password FROM transaction t JOIN user u ON(t.username = u.username) WHERE t.username= '"+username+"' and t.status = 'active' ",function(err,rows){
           var password = rows[0].password
           if (err) {
             res.json({"message":"1 "+err});
@@ -665,7 +664,7 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                     if(err) {
                         res.json({"Error" : true, "message" : "error "+query});
                     } else {
-                        connection.query("SELECT t.objectId, u.password FROM transaction t JOIN user u ON(t.objectId = u.objectId) WHERE t.username= '"+username+"' and t.status = 'active'",function(err,id){
+                        connection.query("SELECT t.objectId, u.password FROM transaction t JOIN user u ON(t.username = u.username) WHERE t.username= '"+username+"' and t.status = 'active'",function(err,id){
                             if(err){
                                 res.json({"message":"error "+query});
                             }else {

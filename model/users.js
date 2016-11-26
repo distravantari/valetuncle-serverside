@@ -29,7 +29,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
       //set price
       var price;
 
-      var checkD = setInterval(function(){checked()}, 6000);// ten minutes 600000
+      // var checkD = setInterval(function(){checked()}, 60000);// ten minutes 600000
 
       function checked(){
 

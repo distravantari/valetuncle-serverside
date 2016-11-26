@@ -251,54 +251,32 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                     if(err) {
                         res.json({"Error" : true, "message" : "error "+query});
                     } else {
-                        connection.query("SELECT t.objectId, u.password FROM transaction t JOIN user u ON(t.username = u.username) WHERE t.username= '"+username+"' and t.status = 'active'",function(err,id){
+                        connection.query("SELECT objectId FROM transaction WHERE username= '"+username+"' and status = 'active'",function(err,id){
                             if(err){
                                 res.json({"message":"error "+query});
                             }else {
                               var option = {
-                                url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
-                                form: {
-                                    username : username,
-                                    password : id[0].password
-                                }
-                                };
-                                request.post(option,function(error,httpResponse,body){
-                                if (!error) {
-                                      // console.log(JSON.parse(body));
-                                      var test = JSON.parse(body)
-                                      // console.log(test.token)
-                                      var auth = "JWT "+ test.token
-                                      // console.log(auth)
-                                      var optionData = {
-                                          url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/transaction/',
-                                          headers: {
-                                              "Authorization" : auth
-                                          },
-                                          json: true,
-                                          body: {
-                                              "username" :  username,
-                                              "pickup" : req.body.pickUp,
-                                              "remark" : req.body.remark,
-                                              "pickupaddress" : req.body.pickUpAddress,
-                                              "actuallocation" : actualLocation,
-                                              "promocode" : promocode
-                                          }
-                                      };
-                                      request.post(optionData,function(error,httpResponse,body){
-                                          if (!error && httpResponse.statusCode == 200) {
-                                              console.log(JSON.stringify(body))
-                                          }else{
-                                              console.log(JSON.stringify(body))
-                                          }
-                                      });
-                                }else{
-                                    console.log(body)
-                                }
-                                });
+                                  url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/transaction/',
+                                  form: {
+                                      username : username,
+                                      pickup : req.body.pickUp,
+                                      remark : req.body.remark,
+                                      pickupaddress : req.body.pickUpAddress,
+                                      actuallocation : actualLocation,
+                                      promo_code : promocode
+                                  }
+                              };
+                              request.post(option,function(error,httpResponse,body){
+                                  if (!error && httpResponse.statusCode == 200) {
+                                      console.log(body)
+                                  }else{
+                                      console.log(body)
+                                  }
+                              });
                                 if(id.length > 1){
-                                    res.json({"message":"success"+id[0].objectId+" "+id[1].objectId});
+                                    res.json({"message":"success "+id[0].objectId+" "+id[1].objectId});
                                 }else{
-                                    res.json({"message":"success"+id[0].objectId});
+                                    res.json({"message":"success "+id[0].objectId});
                                 }
                             }
                         });

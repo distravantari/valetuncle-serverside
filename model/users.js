@@ -12,8 +12,6 @@ function user(router,connection,md5) {
 user.prototype.handleRoutes = function(router,connection,md5) {
     var self = this;
 
-    //there's deleted code in here
-
     //push notif ios
     router.post("/pushNotif",function(req,res){
 

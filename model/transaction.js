@@ -236,6 +236,7 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
     //     });
     // });
 
+    //trans insert by koko
     router.post("/transactionInsert",function(req,res){
         var username = req.body.username;
         var actualLocation = req.body.actualLocation;

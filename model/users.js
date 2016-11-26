@@ -13,6 +13,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
     var self = this;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     //change valet price on specific time
      router.post("/valetprice",function(req,res){
         var now = new Date();
@@ -121,6 +122,8 @@ user.prototype.handleRoutes = function(router,connection,md5) {
     //there's deleted code in here
 >>>>>>> 7e4beb6096c8e52f2cb24de94f0ba377e4013425
 
+=======
+>>>>>>> 7668b8d63aecee308f7d86399855f9fc88a02b38
     //push notif ios
     router.post("/pushNotif",function(req,res){
 

@@ -179,48 +179,6 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
         });
     });
 
-    // router.delete("/transaction",function(req,res){
-    //     var username = req.body.username;
-    //     connection.query("SELECT  t.objectId, u.password FROM transaction t JOIN user u ON(t.username = u.username) WHERE t.username= '"+username+"' and t.status = 'active' ",function(err,rows){
-    //       if (err || rows.length<1) {
-    //         res.json({"message":"1 "+err});
-    //       }else{
-    //         var password = rows[0].password
-    //         var option = {
-    //             url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
-    //             form: {
-    //                 username : username,
-    //                 password : password
-    //             }
-    //         };
-    //         request.post(option,function(error,httpResponse,body){
-    //             if (!error) {
-    //                   var temp = JSON.parse(body)
-    //                   var auth = "JWT "+ temp.token
-    //                   var optionData = {
-    //                       url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/cancel-transaction/',
-    //                       headers: {
-    //                           "Authorization" : auth,
-    //                           "Content-Type" : "application/json"
-    //                       },
-    //                       json: true,
-    //                       body: {
-    //                           "transactionid" : req.body.transId
-    //                       }
-    //                   };
-    //                   request.post(optionData,function(error,httpResponse,body){
-    //                       if (!error && httpResponse.statusCode == 200) {
-    //                           console.log(JSON.stringify(body))
-    //                       }else{
-    //                           console.log(JSON.stringify(body))
-    //                       }
-    //                   });
-    //                 }
-    //         });
-    //       }
-    //     });
-    // });
-
     router.post("/cancelTrans",function(req,res){
       var username = req.body.username;
       connection.query("SELECT * FROM `transaction` WHERE username= '"+username+"' AND status = 'active' ",function(err,rows){

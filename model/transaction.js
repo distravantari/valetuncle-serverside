@@ -148,33 +148,75 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
 
     });
 
+    // router.delete("/transaction",function(req,res){
+    //     var username = req.body.username;
+    //     connection.query("SELECT * FROM `transaction` WHERE username= '"+username+"' AND status = 'active' ",function(err,rows){
+    //       if (err) {
+    //         res.json({"message":"1 "+err});
+    //       }else{
+    //         connection.query("UPDATE transaction SET status = 'cancel' WHERE username= '"+username+"' AND status = 'active' ",function(err,suc){
+    //           if (err) {
+    //             res.json({"message":"2 "+rows.length});
+    //           }else{
+    //             if (rows.length<=0) {
+    //               res.json({"message":"err"});
+    //             }else{
+    //               // DATA MINING
+    //               var cancel_mining = "INSERT INTO action_log(username,driverId,action) VALUES (?,?,?)";
+    //               var table = [username,"","user cancel"];
+    //               cancel_mining = mysql.format(cancel_mining,table);
+    //               connection.query(cancel_mining,function(err,suc){
+    //                 if (err) {
+    //                   res.json({"message":"3 "+err});
+    //                 }else{
+    //                   res.json({"message":"successfully delete transaction "}); //dont change the response
+    //                 }
+    //               })
+    //             }
+    //           }
+    //         })
+    //       }
+    //     });
+    // });
+
     router.delete("/transaction",function(req,res){
         var username = req.body.username;
-        connection.query("SELECT * FROM `transaction` WHERE username= '"+username+"' AND status = 'active' ",function(err,rows){
-          if (err) {
+        connection.query("SELECT  t.objectId, u.password FROM transaction t JOIN user u ON(t.username = u.username) WHERE t.username= '"+username+"' and t.status = 'active' ",function(err,rows){
+          if (err || rows.length<1) {
             res.json({"message":"1 "+err});
           }else{
-            connection.query("UPDATE transaction SET status = 'cancel' WHERE username= '"+username+"' AND status = 'active' ",function(err,suc){
-              if (err) {
-                res.json({"message":"2 "+rows.length});
-              }else{
-                if (rows.length<=0) {
-                  res.json({"message":"err"});
-                }else{
-                  // DATA MINING
-                  var cancel_mining = "INSERT INTO action_log(username,driverId,action) VALUES (?,?,?)";
-                  var table = [username,"","user cancel"];
-                  cancel_mining = mysql.format(cancel_mining,table);
-                  connection.query(cancel_mining,function(err,suc){
-                    if (err) {
-                      res.json({"message":"3 "+err});
-                    }else{
-                      res.json({"message":"successfully delete transaction "}); //dont change the response
-                    }
-                  })
+            var password = rows[0].password
+            var option = {
+                url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
+                form: {
+                    username : username,
+                    password : password
                 }
-              }
-            })
+            };
+            request.post(option,function(error,httpResponse,body){
+                if (!error) {
+                      var temp = JSON.parse(body)
+                      var auth = "JWT "+ temp.token
+                      var optionData = {
+                          url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/cancel-transaction/',
+                          headers: {
+                              "Authorization" : auth,
+                              "Content-Type" : "application/json"
+                          },
+                          json: true,
+                          body: {
+                              "transactionid" : req.body.transId
+                          }
+                      };
+                      request.post(optionData,function(error,httpResponse,body){
+                          if (!error && httpResponse.statusCode == 200) {
+                              console.log(JSON.stringify(body))
+                          }else{
+                              console.log(JSON.stringify(body))
+                          }
+                      });
+                    }
+            });
           }
         });
     });

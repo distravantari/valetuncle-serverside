@@ -203,39 +203,6 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
     });
 
     //create transaction
-    // router.post("/transactionInsert",function(req,res){
-    //     var username = req.body.username;
-    //     var actualLocation = req.body.actualLocation;
-    //     var promocode = req.body.promoCode;
-    //     connection.query("SELECT * FROM setting",function(err,fee){
-    //         if(err){
-    //              res.json({"message":"err .."});
-    //         }else{
-    //             var query = "INSERT INTO `transaction` (username,fee,notif,pickUp,remark,destination,pickUpAddress,actualLocation,promocode) VALUES (?,?,?,?,?,?,?,?,?)";
-    //             var table = [username,req.body.fee,req.body.notif,req.body.pickUp,req.body.remark,req.body.destination,req.body.pickUpAddress,actualLocation,promocode];
-    //             query = mysql.format(query,table);
-    //             connection.query(query,function(err,rows){
-    //                 if(err) {
-    //                     res.json({"Error" : true, "message" : "error "+query});
-    //                 } else {
-    //                     connection.query("SELECT objectId FROM transaction WHERE username= '"+username+"' and status = 'active'",function(err,id){
-    //                         if(err){
-    //                             res.json({"message":"error "+query});
-    //                         }else {
-
-    //                             if(id.length > 1){
-    //                                 res.json({"message":"success "+id[0].objectId+" "+id[1].objectId});
-    //                             }else{
-    //                                 res.json({"message":"success "+id[0].objectId});
-    //                             }
-    //                         }
-    //                     });
-    //                 }
-    //             });
-    //         }
-    //     });
-    // });
-
     router.post("/transactionInsert",function(req,res){
         var username = req.body.username;
         var actualLocation = req.body.actualLocation;
@@ -251,54 +218,15 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                     if(err) {
                         res.json({"Error" : true, "message" : "error "+query});
                     } else {
-                        connection.query("SELECT t.objectId, u.password FROM transaction t JOIN user u ON(t.username = u.username) WHERE t.username= '"+username+"' and t.status = 'active'",function(err,id){
+                        connection.query("SELECT objectId FROM transaction WHERE username= '"+username+"' and status = 'active'",function(err,id){
                             if(err){
                                 res.json({"message":"error "+query});
                             }else {
-                              var option = {
-                                url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
-                                form: {
-                                    username : username,
-                                    password : id[0].password
-                                }
-                                };
-                                request.post(option,function(error,httpResponse,body){
-                                if (!error) {
-                                      // console.log(JSON.parse(body));
-                                      var test = JSON.parse(body)
-                                      // console.log(test.token)
-                                      var auth = "JWT "+ test.token
-                                      // console.log(auth)
-                                      var optionData = {
-                                          url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/transaction/',
-                                          headers: {
-                                              "Authorization" : auth
-                                          },
-                                          json: true,
-                                          body: {
-                                              "username" :  username,
-                                              "pickup" : req.body.pickUp,
-                                              "remark" : req.body.remark,
-                                              "pickupaddress" : req.body.pickUpAddress,
-                                              "actuallocation" : actualLocation,
-                                              "promocode" : promocode
-                                          }
-                                      };
-                                      request.post(optionData,function(error,httpResponse,body){
-                                          if (!error && httpResponse.statusCode == 200) {
-                                              console.log(JSON.stringify(body))
-                                          }else{
-                                              console.log(JSON.stringify(body))
-                                          }
-                                      });
-                                }else{
-                                    console.log(body)
-                                }
-                                });
+
                                 if(id.length > 1){
-                                    res.json({"message":"success"+id[0].objectId+" "+id[1].objectId});
+                                    res.json({"message":"success "+id[0].objectId+" "+id[1].objectId});
                                 }else{
-                                    res.json({"message":"success"+id[0].objectId});
+                                    res.json({"message":"success "+id[0].objectId});
                                 }
                             }
                         });
@@ -307,6 +235,78 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
             }
         });
     });
+
+    // router.post("/transactionInsert",function(req,res){
+    //     var username = req.body.username;
+    //     var actualLocation = req.body.actualLocation;
+    //     var promocode = req.body.promoCode;
+    //     connection.query("SELECT * FROM setting",function(err,fee){
+    //         if(err){
+    //              res.json({"message":"err .."});
+    //         }else{
+    //             var query = "INSERT INTO `transaction` (username,fee,notif,pickUp,remark,destination,pickUpAddress,actualLocation,promocode) VALUES (?,?,?,?,?,?,?,?,?)";
+    //             var table = [username,req.body.fee,req.body.notif,req.body.pickUp,req.body.remark,req.body.destination,req.body.pickUpAddress,actualLocation,promocode];
+    //             query = mysql.format(query,table);
+    //             connection.query(query,function(err,rows){
+    //                 if(err) {
+    //                     res.json({"Error" : true, "message" : "error "+query});
+    //                 } else {
+    //                     connection.query("SELECT t.objectId, u.password FROM transaction t JOIN user u ON(t.username = u.username) WHERE t.username= '"+username+"' and t.status = 'active'",function(err,id){
+    //                         if(err){
+    //                             res.json({"message":"error "+query});
+    //                         }else {
+    //                           var option = {
+    //                             url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
+    //                             form: {
+    //                                 username : username,
+    //                                 password : id[0].password
+    //                             }
+    //                             };
+    //                             request.post(option,function(error,httpResponse,body){
+    //                             if (!error) {
+    //                                   // console.log(JSON.parse(body));
+    //                                   var test = JSON.parse(body)
+    //                                   // console.log(test.token)
+    //                                   var auth = "JWT "+ test.token
+    //                                   // console.log(auth)
+    //                                   var optionData = {
+    //                                       url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/transaction/',
+    //                                       headers: {
+    //                                           "Authorization" : auth
+    //                                       },
+    //                                       json: true,
+    //                                       body: {
+    //                                           "username" :  username,
+    //                                           "pickup" : req.body.pickUp,
+    //                                           "remark" : req.body.remark,
+    //                                           "pickupaddress" : req.body.pickUpAddress,
+    //                                           "actuallocation" : actualLocation,
+    //                                           "promocode" : promocode
+    //                                       }
+    //                                   };
+    //                                   request.post(optionData,function(error,httpResponse,body){
+    //                                       if (!error && httpResponse.statusCode == 200) {
+    //                                           console.log(JSON.stringify(body))
+    //                                       }else{
+    //                                           console.log(JSON.stringify(body))
+    //                                       }
+    //                                   });
+    //                             }else{
+    //                                 console.log(body)
+    //                             }
+    //                             });
+    //                             if(id.length > 1){
+    //                                 res.json({"message":"success"+id[0].objectId+" "+id[1].objectId});
+    //                             }else{
+    //                                 res.json({"message":"success"+id[0].objectId});
+    //                             }
+    //                         }
+    //                     });
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
 
     //function cancelTransaction(transId,driverId)
     router.post("/cancelTransaction",function(req,res){

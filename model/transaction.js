@@ -255,47 +255,7 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                             if(err){
                                 res.json({"message":"error "+query});
                             }else {
-                                if(id.length > 1){
-                                    res.json({"message":"success"+id[0].objectId+" "+id[1].objectId});
-                                        var option = {
-                                        url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
-                                        form: {
-                                            username : username,
-                                            password : id[0].password
-                                        }
-                                        };
-                                        request.post(option,function(error,httpResponse,body){
-                                        if (!error) {
-                                              // console.log(JSON.parse(body));
-                                              var test = JSON.parse(body)
-                                              // console.log(test.token)
-                                              var auth = "JWT "+ test.token
-                                              // console.log(auth)
-                                              var optionData = {
-                                                  url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/old-transaction/',
-                                                  headers: {
-                                                      "Authorization" : auth
-                                                  },
-                                                  json: true,
-                                                  body: {
-                                                      "username" :  username,
-                                                      "promocode" : promocode
-                                                  }
-                                              };
-                                              request.post(optionData,function(error,httpResponse,body){
-                                                  if (!error && httpResponse.statusCode == 200) {
-                                                      console.log(JSON.stringify(body))
-                                                  }else{
-                                                      console.log(JSON.stringify(body))
-                                                  }
-                                              });
-                                }else{
-                                    console.log(body)
-                                }
-                                });
-                                }else{
-                                    res.json({"message":"success"+id[0].objectId});
-                                    var option = {
+                              var option = {
                                 url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
                                 form: {
                                     username : username,
@@ -331,6 +291,10 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                                     console.log(body)
                                 }
                                 });
+                                if(id.length > 1){
+                                    res.json({"message":"success"+id[0].objectId+" "+id[1].objectId});
+                                }else{
+                                    res.json({"message":"success"+id[0].objectId});
                                 }
                             }
                         });

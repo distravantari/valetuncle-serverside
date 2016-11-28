@@ -270,17 +270,13 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                                       var auth = "JWT "+ test.token
                                       // console.log(auth)
                                       var optionData = {
-                                          url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/transaction/',
+                                          url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/old-transaction/',
                                           headers: {
                                               "Authorization" : auth
                                           },
                                           json: true,
                                           body: {
                                               "username" :  username,
-                                              "pickup" : req.body.pickUp,
-                                              "remark" : req.body.remark,
-                                              "pickupaddress" : req.body.pickUpAddress,
-                                              "actuallocation" : actualLocation,
                                               "promocode" : promocode
                                           }
                                       };

@@ -320,6 +320,7 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                             if(err){
                                 res.json({"message":"error "+query});
                             }else {
+                              var objectId = id[0].objectId
                               var option = {
                                 url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
                                 form: {
@@ -329,8 +330,11 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                                 };
                                 request.post(option,function(error,httpResponse,body){
                                 if (!error) {
+                                      // console.log(JSON.parse(body));
                                       var temp = JSON.parse(body)
+                                      // console.log(test.token)
                                       var auth = "JWT "+ temp.token
+                                      // console.log(auth)
                                       var optionData = {
                                           url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/old-transaction/',
                                           headers: {
@@ -340,7 +344,8 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                                           json: true,
                                           body: {
                                               "username" :  username,
-                                              "promocode" : promocode
+                                              "promocode" : promocode,
+                                              "transactionid" : objectId
                                           }
                                       };
                                       request.post(optionData,function(error,httpResponse,body){
@@ -365,7 +370,6 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                 });
             }
         });
-    });
 
     //function cancelTransaction(transId,driverId)
     router.post("/cancelTransaction",function(req,res){

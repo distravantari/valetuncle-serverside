@@ -597,7 +597,7 @@ user.prototype.handleRoutes = function(router,connection,md5) {
 
     router.post("/findNearestDriver",function(req,res){
            var transId = req.body.transId;
-           var query = "UPDATE transaction SET driverTemp = 'VIP 333', driverId = 'VIP 333' WHERE objectId = "+transId;
+           var query = "UPDATE transaction SET driverTemp = '2', driverId = '2' WHERE objectId = "+transId;
            query = mysql.format(query);
            connection.query(query,function(err,shh){
                if(err){

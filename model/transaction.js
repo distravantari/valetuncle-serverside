@@ -370,6 +370,7 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
                 });
             }
         });
+    });
 
     //function cancelTransaction(transId,driverId)
     router.post("/cancelTransaction",function(req,res){

@@ -274,8 +274,8 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
         }else{
           var query = "UPDATE `transaction` SET status = 'cancel' WHERE username= '"+username+"' AND status = 'active' ";
           connection.query(query,function(err,suc){
-            var password = row[0].password
-            var objectId = row[0].objectId
+            var password = rows[0].password
+            var objectId = rows[0].objectId
             if (err) {
               res.json({"message":query});
             }else{

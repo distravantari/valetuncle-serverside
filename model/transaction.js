@@ -244,27 +244,82 @@ transaction.prototype.handleRoutes = function(router,connection,md5) {
         });
     });
 
+    // router.post("/cancelTrans",function(req,res){
+    //   var username = req.body.username;
+    //   connection.query("SELECT * FROM `transaction` WHERE username= '"+username+"' AND status = 'active' ",function(err,rows){
+    //     if (err) {
+    //       res.json({"message":err});
+    //     }else{
+    //         var query = "UPDATE `transaction` SET status = 'cancel' WHERE username= '"+username+"' AND status = 'active' ";
+    //       connection.query(query,function(err,suc){
+    //         if (err) {
+    //           res.json({"message":query});
+    //         }else{
+    //           if (rows.length<=0) {
+    //             res.json({"message":"err "+query});
+    //           }else{
+    //             res.json({"message":"successfully delete transaction"}); //dont change the resnponse
+    //           }
+    //         }
+    //       })
+    //     }
+    //   });
+    // });
+
     router.post("/cancelTrans",function(req,res){
       var username = req.body.username;
-      connection.query("SELECT * FROM `transaction` WHERE username= '"+username+"' AND status = 'active' ",function(err,rows){
-        if (err) {
+      connection.query("SELECT  t.objectId, u.password FROM transaction t JOIN user u ON(t.username = u.username) WHERE t.username= '"+username+"' and t.status = 'active'",function(err,rows){
+        if (err || rows.length < 1) {
           res.json({"message":err});
         }else{
-            var query = "UPDATE `transaction` SET status = 'cancel' WHERE username= '"+username+"' AND status = 'active' ";
+          var query = "UPDATE `transaction` SET status = 'cancel' WHERE username= '"+username+"' AND status = 'active' ";
           connection.query(query,function(err,suc){
+            var password = row[0].password
+            var objectId = row[0].objectId
             if (err) {
               res.json({"message":query});
             }else{
               if (rows.length<=0) {
                 res.json({"message":"err "+query});
               }else{
+                var option = {
+                    url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/token/',
+                    form: {
+                        username : username,
+                        password : password
+                    }
+                };
+                request.post(option,function(error,httpResponse,body){
+                    if (!error) {
+                          var temp = JSON.parse(body)
+                          var auth = "JWT "+ temp.token
+                          var optionData = {
+                              url: 'https://ylhpfupn1m.execute-api.ap-southeast-1.amazonaws.com/dev/user/old-cancel-transaction/',
+                              headers: {
+                                  "Authorization" : auth
+                              },
+                              json: true,
+                              body: {
+                                  "transactionid" : objectId,
+                                  "Content-Type" : "application/json"
+                              }
+                          };
+                          request.post(optionData,function(error,httpResponse,body){
+                              if (!error && httpResponse.statusCode == 200) {
+                                  console.log(JSON.stringify(body))
+                              }else{
+                                  console.log(JSON.stringify(body))
+                                  console.log(httpResponse.statusCode)
+                              }
+                          });
+                        }
+                });
                 res.json({"message":"successfully delete transaction"}); //dont change the resnponse
               }
             }
           })
         }
       });
-
     });
 
     //create transaction
